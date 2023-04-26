@@ -4,4 +4,4 @@
 view("notes/create.view.php", [ //this connects to the html part
    'heading' => 'Create Note',
    'errors' => []
-]);
+] );

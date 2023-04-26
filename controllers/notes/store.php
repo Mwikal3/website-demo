@@ -1,6 +1,6 @@
 <?php
 
-//this controllerd persists submitting a new note to database
+//this controller persists submitting a new note to database
 
 
 use Core\Validator;

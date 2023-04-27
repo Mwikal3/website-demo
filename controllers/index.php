@@ -1,5 +1,6 @@
 <?php
 
+$_SESSION['name']= 'Mwikali';
 
 
  view("index.view.php",[

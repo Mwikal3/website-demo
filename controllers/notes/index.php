@@ -3,6 +3,8 @@
 use Core\App;
 use Core\Database;
 
+
+
 $db = App::resolve(Database::class); 
 
 // $config = require base_path('config.php'); //this requires a config file which contains db credentials

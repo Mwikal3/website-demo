@@ -49,6 +49,8 @@ use Core\App;
             'password'=> $password
           ]);
 
+
+          //mark that the user has logged in to the page
           $_SESSION['user']=[
             'email' => $email
           ];

@@ -14,7 +14,7 @@ class Database
   public $connection;
   public $statement;
 
-  public function __construct($config) //construct initializes a new object before it is used 
+  public function __construct($config) //a constructor is a method which is run when an object is created
   {
     $dsn = 'mysql:' . http_build_query($config, '', ';');
     $this->connection = new PDO($dsn, 'root', '', [

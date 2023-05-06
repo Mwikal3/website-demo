@@ -9,7 +9,8 @@ class Router{
         $this->routes[] = [
             'method' => $method,
             'uri' => $uri,
-            'controller' => $controller
+            'controller' => $controller,
+            'middleware' => null
         ];
 
         return $this;
@@ -46,11 +47,18 @@ class Router{
     }
     public function only($key){
 
+        $this->routes[array_key_last($this->routes)]['middleware']= $key;
+
+        return $this;
+
     }
 
     public function route($uri, $method){
         foreach($this->routes as $route){
             if($route['uri'] === $uri && $route['method'] === strtoupper($method)){
+
+                //apply the middleware
+                
                 return require base_path($route['controller']);
             }
         }

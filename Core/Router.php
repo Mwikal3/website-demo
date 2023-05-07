@@ -41,7 +41,7 @@ class Router{
         return $this->add('PUT', $uri, $controller);
 
     }
-
+ 
     public function patch($uri, $controller)
     {
         return $this->add('PATCH', $uri, $controller);
@@ -60,7 +60,7 @@ class Router{
             if($route['uri'] === $uri && $route['method'] === strtoupper($method)){
                 //apply middleware
 
-                Middleware::resolve($route['controller']);
+                Middleware::resolve($route['middleware']);
 
                 // if($route['middleware']){
                 //         //apply the middleware

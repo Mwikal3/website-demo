@@ -1,29 +1,28 @@
 <?php 
  
- Namespace Core\Middleware;
+ namespace Core\Middleware;
 
 use Exception;
 
  class Middleware{
 
-    const MAP=[
+    public const MAP=[
         'guest' => Guest::class,
         'auth' => Auth::class
     ];
 
     public static function resolve($key)
     {
-if(!$key){
-    return;
-}
-    
-    $middleware = static::MAP[$key] ?? false;
+        if(! $key){
+            return;
+        }
+       $middleware = static::MAP[$key] ?? false;
 
-    if(! $middleware){
-        throw new \Exception("no matching middleware found within . '$key'. ");
-    }
+       if(! $middleware){
+        throw new \Exception("no matching middleware found for '{$key}'. found");
+       }
 
-                    (new $middleware)->handle();
+       (new $middleware)->handle();
 }
 
  }

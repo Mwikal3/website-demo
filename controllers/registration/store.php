@@ -46,12 +46,12 @@ use Core\App;
             //if not create one in the database and log the user in and redirect 
           $db->query('INSERT into users(email, password) VALUES(:email,:password)',[
             'email'=> $email,
-            'password'=> $password
+            'password'=> password_hash($password, PASSWORD_BCRYPT)
           ]);
 
 
           //mark that the user has logged in to the page
-          $_SESSION['user']=[
+          $_SESSION['user'] = [
             'email' => $email
           ];
 

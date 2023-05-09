@@ -27,3 +27,9 @@ $router->post('/notes', 'controllers/notes/store.php');
 
 $router->get('/register', 'controllers/registration/create.php')->only('guest');
 $router->post('/register', 'controllers/registration/store.php');
+
+$router->get('/login', 'controllers/sessions/create.php') ;
+$router->get('/login', 'controllers/sessions/store.php');
+$router->get('/login', 'controllers/sessions/destroy.php');
+
+

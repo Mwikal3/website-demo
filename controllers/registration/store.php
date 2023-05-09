@@ -51,9 +51,10 @@ use Core\App;
 
 
           //mark that the user has logged in to the page
-          $_SESSION['user'] = [
-            'email' => $email
-          ];
+          // $_SESSION['user'] = [
+          //   'email' => $email
+          // ];
+          login($user);
 
           header('location: /');
           exit();

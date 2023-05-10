@@ -30,6 +30,6 @@ $router->post('/register', 'controllers/registration/store.php');
 
 $router->get('/login', 'controllers/sessions/create.php') ;
 $router->post('/login', 'controllers/sessions/store.php');
-$router->get('/login', 'controllers/sessions/destroy.php');
+$router->delete('/logout', 'controllers/sessions/destroy.php');
 
 

@@ -31,6 +31,7 @@ if(! empty($errors)){
 
 
 //check if user already exists 
+$db = App::resolve(Database::class);
 
 $user=$db->query('select * from users where email= :email',[
     'email' => $email
@@ -38,10 +39,21 @@ $user=$db->query('select * from users where email= :email',[
 
 //if user email does not exist return the error message
 
-if(! $user){
-    return view('sessions/create.view.php',[
-        'errors' => [
-            'email' =>'No matching user with that account found '
-        ]
-        ]);
+if($user){
+
+//check if the user password matches the one in the database 
+if (password_verify($password, $user['password'])===$password){
+//log in the user 
+login($user);
+
+redirect('/sessions/create.php'); //this is a function which redirects when conditions are not met 
+//  header('location: /');
+//      exit();
 }
+}
+
+return view('sessions/create.view.php',[
+    'errors' => [
+        'email' =>'No matching user with that account and password found'
+    ]
+    ]);

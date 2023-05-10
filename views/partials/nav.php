@@ -45,11 +45,16 @@
 
 
                 <?php endif; ?>
-
-              <div>
-                
+            </div>
+          </div>
+                <?php if($_SESSION['user'] ?? false) : ?>
+              <div class="ml-3">
+                <form method="POST" action="/logout">
+                  <input type="hidden" name="_method" value="DELETE"/>
+                  <button class="text-sm text-white">LOG OUT</button>
+                </form>
               </div>
-
+              <?php endif; ?>
               <!--
                 Dropdown menu, show/hide based on menu state.
 

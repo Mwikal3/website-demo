@@ -47,6 +47,24 @@ use Core\Response;
       $_SESSION['user'] = [
          'email' =>$user['email']
        ];
+
+       session_regenerate_id(true);
+   }
+   function redirect($path)
+   {
+    header("Location: {$path}");
+      exit();
+   }
+   function logout(){
+      
+$_SESSION=[];
+
+session_destroy();
+
+$params=session_get_cookie_params();
+
+setcookie('PHPSESSID','',time()-3600, $params['path'], $params['domain'],$params['secure'], $params['httponly']);
+
    }
 ?>
   

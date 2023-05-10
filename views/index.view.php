@@ -10,7 +10,7 @@
     <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
       <!-- Your content -->
       
-      <p>Hello. welcome to the home page</p>
+      <p>Hello. "<?= $_SESSION[$email['email']] ?? 'Guest' ?> ".welcome to the home page</p>
     </div>
   </main>
   <?php require ('partials/footer.php') ?>

@@ -37,9 +37,9 @@ use Core\App;
           if($user){
             //if yes redirect to log in page
 
-
-            header('location: /');
-            exit();
+            redirect('/');
+            // header('location: /');
+            // exit();
           }
           else
 

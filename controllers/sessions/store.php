@@ -1,59 +1,73 @@
-<?php 
+<?php
+
 use Core\Validator;
 use Core\Database;
 use Core\App;
 
 //log in user if credentials match 
 
+$email = $_POST['email'];
+$password = $_POST['password'];
 
-$email= $_POST['email'];
-$password=$_POST['password'];
-
-$errors=[];
+$errors = [];
 
 //validate the form
 
 
 if (!Validator::email($email)) {
-$errors['email']= 'please provide a valid email address';
+    $errors['email'] = 'please provide a valid email address';
 }
 
-if (! Validator::string($password)){
-$errors['password']= 'please provide a valid password';
+if (!Validator::string($password)) {
+    $errors['password'] = 'please provide a valid password';
 }
 
-if(! empty($errors)){
-    return view('sessions/create.view.php',[
+if (!empty($errors)) {
+    return view('sessions/create.view.php', [
         'errors' => $errors
     ]);
-  }
-  
-
+}
 
 //check if user already exists 
 $db = App::resolve(Database::class);
 
-$user=$db->query('select * from users where email= :email',[
+$user = $db->query('select * from users where email= :email', [
     'email' => $email
-    ])->find();
+])->find();
 
 //if user email does not exist return the error message
+if ($user) {
 
-if($user){
+    //check if the user password matches the one in the database 
+    if (password_verify($password, $user['password'])) {
+        //log in the user 
+        login([
+            'email' => $email
+        ]);
 
-//check if the user password matches the one in the database 
-if (password_verify($password, $user['password'])===$password){
-//log in the user 
-login($user);
-
-redirect('/sessions/create.php'); //this is a function which redirects when conditions are not met 
-//  header('location: /');
-//      exit();
+        redirect('/');
+        
 }
-}
+ else
+  {
 
-return view('sessions/create.view.php',[
-    'errors' => [
-        'email' =>'No matching user with that account and password found'
-    ]
+    return view('sessions/create.view.php', [
+        'errors' => [
+            'email' => 'No matching user with that account and password found'
+        ]
     ]);
+}
+}
+
+// login($user);
+
+        // redirect('/'); //this is a function which redirects when conditions are not met 
+        //  header('location: /');
+        //      exit();
+    // } else {
+    //     return view('sessions/create.view.php', [
+    //         'errors' => [
+    //             'email' => 'Wrong credentials.'
+    //         ]
+    //     ]);
+    // }

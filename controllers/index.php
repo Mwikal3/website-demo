@@ -1,6 +1,6 @@
 <?php
 
-$_SESSION['name'] = 'mwikali';
+// $_SESSION['name'] = 'mwikali';
 
 
  view("index.view.php",[
@@ -8,6 +8,6 @@ $_SESSION['name'] = 'mwikali';
 ]); 
 //this connects to the html part 
 
-
+dd('users');
 
     

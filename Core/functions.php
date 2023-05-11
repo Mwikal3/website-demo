@@ -4,67 +4,68 @@ use Core\Response;
 
 // use Core\Response;
 
-   function dd($value)
-   {
-      echo "<pre>";
-      var_dump($value);
-      echo "</pre>";
+function dd($value)
+{
+   echo "<pre>";
+   var_dump($value);
+   echo "</pre>";
 
 
-      die();
+   die();
+}
+
+function urlIs($value)
+{
+   return $_SERVER['REQUEST_URI'] === $value;
+}
+
+function abort($code = 404)
+{
+   http_response_code($code);
+   require "views/{$code}.php";
+   die();
+}
+
+function authorize($condition, $status = Response::FORBIDDEN)
+{
+   if (!$condition) {
+      abort($status);
    }
- 
-   function urlIs($value) {
-      return $_SERVER['REQUEST_URI'] === $value;
-   }
+}
 
-   function abort($code=404){
-      http_response_code($code);  
-            require "views/{$code}.php";
-            die();
-   }
+function base_path($path)
+{
+   return BASE_PATH . $path;
+}
 
-   function authorize($condition, $status=Response::FORBIDDEN)
-   {
-      if (!$condition)
-      {
-         abort($status);
-      }
-   }
+function view($path, $attributes = [])
+{
+   extract($attributes);  //the extract function is used to accept an array and turn it into a set of variables
 
-   function base_path($path) {
-      return BASE_PATH . $path;
-   }
+   require base_path('views/' . $path);
+}
 
-   function view($path, $attributes=[])
-   {
-      extract($attributes);  //the extract function is used to accept an array and turn it into a set of variables
+function login($user)
+{
+   $_SESSION['user'] = [
+      'email' => $user['email']
+   ];
 
-      require base_path('views/' . $path);
-   }
+   session_regenerate_id(true);
+}
+function redirect($path)
+{
+   header("Location: {$path}");
+   exit();
+}
+function logout()
+{
 
-   function login($user){
-      $_SESSION['user'] = [
-         'email' =>$user['email']
-       ];
+   $_SESSION = [];
 
-       session_regenerate_id(true);
-   }
-   function redirect($path)
-   {
-    header("Location: {$path}");
-      exit();
-   }
-   function logout(){
-      
-$_SESSION=[];
+   session_destroy();
 
-session_destroy();
+   $params = session_get_cookie_params();
 
-$params=session_get_cookie_params();
-
-setcookie('PHPSESSID','',time()-3600, $params['path'], $params['domain'],$params['secure'], $params['httponly']);
-
-   }
-?>
-  
+   setcookie('PHPSESSID', '', time() - 3600, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
+}

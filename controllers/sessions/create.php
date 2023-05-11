@@ -1,3 +1,5 @@
-<?php 
+<?php
 
-view('sessions/create.view.php');
+view('sessions/create.view.php', [
+    'errors' => []
+]);

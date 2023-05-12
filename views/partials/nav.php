@@ -11,8 +11,10 @@
               <a href="/" class="<?= urlIs('/') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Home</a> 
 
               <a href="/about" class="<?= urlIs('/about') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">About</a>
-
-              <a href="/notes" class="<?= urlIs('/notes') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Notes</a>
+                        <?php if ($_SESSION['user'] ?? false) : ?>
+                            <a href="/notes"
+                               class="<?= urlIs('/notes') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Notes</a>
+                        <?php endif ?>
 
               <a href="/contact" class="<?= urlIs('/contact') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Contact</a>
                 
@@ -42,13 +44,12 @@
               <?php else : ?>
                 <a href="/register" class="<?= urlIs('/register') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">REGISTER</a>
                 <a href="/login" class="<?= urlIs('/login') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">LOG IN </a>
-
-
                 <?php endif; ?>
             </div>
           </div>
+          
+          <div class="ml-3">
                 <?php if($_SESSION['user'] ?? false) : ?>
-              <div class="ml-3">
                 <form method="POST" action="/logout">
                   <input type="hidden" name="_method" value="DELETE"/>
                   <button class="text-sm text-white">LOG OUT</button>

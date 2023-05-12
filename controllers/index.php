@@ -4,10 +4,11 @@
 
 
  view("index.view.php",[
-    'heading' => 'Home'
+    'heading' => 'Home',
+    'errors' => []
 ]); 
 //this connects to the html part 
 
-dd('users');
+
 
     

@@ -3,30 +3,39 @@
 use Core\Validator;
 use Core\Database;
 use Core\App;
+use Http\Forms\loginForm;
 
 //log in user if credentials match 
 
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-$errors = [];
+
 
 //validate the form
 
+$form=new loginForm();
 
-if (!Validator::email($email)) {
-    $errors['email'] = 'please provide a valid email address';
-}
-
-if (!Validator::string($password)) {
-    $errors['password'] = 'please provide a valid password';
-}
-
-if (!empty($errors)) {
+if (! $form->validate($email, $password)){
     return view('sessions/create.view.php', [
-        'errors' => $errors
-    ]);
+                'errors' => $form->errors()
+            ]);
 }
+
+// $errors = [];
+// if (!Validator::email($email)) {
+//     $errors['email'] = 'please provide a valid email address';
+// }
+
+// if (!Validator::string($password)) {
+//     $errors['password'] = 'please provide a valid password';
+// }
+
+// if (!empty($errors)) {
+//     return view('sessions/create.view.php', [
+//         'errors' => $errors
+//     ]);
+// }
 
 //check if user already exists 
 $db = App::resolve(Database::class);

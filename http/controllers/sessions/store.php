@@ -1,26 +1,54 @@
 <?php
 
-use Core\Validator;
-use Core\Database;
-use Core\App;
-use Http\Forms\loginForm;
+use Core\Authenticator;
+use Http\LoginForm;
 
 //log in user if credentials match 
 
 $email = $_POST['email'];
-$password = $_POST['password'];
-
-
+$password = $_POST['password']; 
 
 //validate the form
 
-$form=new loginForm();
+$form = new LoginForm();
 
-if (! $form->validate($email, $password)){
-    return view('sessions/create.view.php', [
-                'errors' => $form->errors()
-            ]);
+if ($form->validate($email, $password)) {
+    // return view('sessions/create.view.php', [
+    //     'errors' => $form->errors()
+    // ]);
+    $auth = new Authenticator();
+
+if ($auth->attempt($email, $password))//this calls function attempt which perfoms authorisation 
+{
+redirect('/');
 }
+else
+{
+    $form->error('email','No matching user with that account and password found');
+}
+}
+return view('sessions/create.view.php', [
+            'errors' => [
+                'email' => 'No matching user with that account and password found'
+            ]
+        ]);
+
+//authenticate the user 
+// $auth = new Authenticator();
+
+// if ($auth->attempt($email, $password))//this calls function attempt which perfoms authorisation 
+// {
+// redirect('/');
+// }else
+// {
+//     return view('sessions/create.view.php', [
+//         'errors' => [
+//             'email' => 'No matching user with that account and password found'
+//         ]
+//     ]);
+// } 
+
+
 
 // $errors = [];
 // if (!Validator::email($email)) {
@@ -37,36 +65,39 @@ if (! $form->validate($email, $password)){
 //     ]);
 // }
 
-//check if user already exists 
-$db = App::resolve(Database::class);
 
-$user = $db->query('select * from users where email= :email', [
-    'email' => $email
-])->find();
+
+//AUTHENTICATING THE USER
+
+
+//check if user already exists 
+// $db = App::resolve(Database::class);
+
+// $user = $db->query('select * from users where email= :email', [
+//     'email' => $email
+// ])->find();
 
 //if user email does not exist return the error message
-if ($user) {
+// if ($user) {
 
-    //check if the user password matches the one in the database 
-    if (password_verify($password, $user['password'])) {
-        //log in the user 
-        login([
-            'email' => $email
-        ]);
+//     //check if the user password matches the one in the database 
+//     if (password_verify($password, $user['password'])) {
+//         //log in the user 
+//         login([
+//             'email' => $email
+//         ]);
 
-        redirect('/');
-        
-}
- else
-  {
+    //     redirect('/');
+    // } 
+    // else {
 
-    return view('sessions/create.view.php', [
-        'errors' => [
-            'email' => 'No matching user with that account and password found'
-        ]
-    ]);
-}
-}
+        // return view('sessions/create.view.php', [
+        //     'errors' => [
+        //         'email' => 'No matching user with that account and password found'
+        //     ]
+        // ]);
+//     }
+// }
 
 // login($user);
 

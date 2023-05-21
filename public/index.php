@@ -28,3 +28,6 @@
   $method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD']; //checks if method is set and assigns that value to method else defaults to the other method
 
   $router->route($uri, $method);
+
+  // unset($_SESSION['_flash']);
+  session::unflash();

@@ -1,5 +1,5 @@
 <?php
 
 view('sessions/create.view.php', [
-    'errors' => []
+    'errors' => $_SESSION['errors'] ?? []
 ]);

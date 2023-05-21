@@ -27,11 +27,35 @@ else
     $form->error('email','No matching user with that account and password found');
 }
 }
-return view('sessions/create.view.php', [
-            'errors' => [
-                'email' => 'No matching user with that account and password found'
-            ]
-        ]);
+
+session::flash($errors, $form->errors());  //this flashes the validation errors to the session 
+//perfom a redirect 
+
+return redirect('/login');
+
+// return view('sessions/create.view.php', [
+//             'errors' => [
+//                 'email' => 'No matching user with that account and password found'
+//             ]
+//         ]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //authenticate the user 
 // $auth = new Authenticator();
